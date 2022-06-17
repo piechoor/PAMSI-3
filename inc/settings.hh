@@ -1,6 +1,6 @@
 #define BOARD_SIZE 3
 #define ALERT_TIME 2000
-#define WINNING_LENGHT 2
+#define WINNING_LENGHT 3
 
 //FOR GRAPHS
 #define START_NODE 0 //node from which we measure distances to other nodes

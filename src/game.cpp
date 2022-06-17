@@ -72,8 +72,57 @@ int Game::evaluate() {
         player_o=0; player_x=0;
     }
     //checking descending diagonals
-    
-    
+    for (int i=BOARD_SIZE-2; i>=0; --i) {
+        for (int j=0; j<BOARD_SIZE-i; ++j) {
+            if(i+j>=BOARD_SIZE or i+j<0 or j>=BOARD_SIZE or j<0) return-5;
+            if (board[i+j][j]=='x') ++player_x;
+            if (board[i+j][j]=='o') ++player_o;
+            if (player_x==WINNING_LENGHT) return 1;
+            if (player_o==WINNING_LENGHT) return -1;
+            if (board[i+j][j]==' ') {player_o=0; player_x=0;}
+        }
+        player_o=0; player_x=0;
+    }
+    for (int j=1; j<BOARD_SIZE-1; ++j) {
+        for (int i=0; i<BOARD_SIZE-j; ++i) {
+            //if(i+j>=BOARD_SIZE or i+j<0 or i>=BOARD_SIZE or i<0) return-5;
+            //board[i][i+j]='C';
+
+            if (board[i][i+j]=='x') ++player_x;
+            if (board[i][i+j]=='o') ++player_o;
+            if (player_x==WINNING_LENGHT) return 1;
+            if (player_o==WINNING_LENGHT) return -1;
+            if (board[i][i+j]==' ') {player_o=0; player_x=0;}
+        }
+        player_o=0; player_x=0;
+    }
+    //checking ascending diagonals //BY TRANSFORMING BOARD POSITION (i,j)->(i,-j)->(i,-j+BOARD_SIZE-1)
+                                   //that makes diagonals descending and previous algorithm works
+    for (int i=BOARD_SIZE-2; i>=0; --i) {
+        for (int j=0; j<BOARD_SIZE-i; ++j) { //going through a certain diagonal
+            //board[i+j][BOARD_SIZE-j-1]='C';
+            //if(i+j>=BOARD_SIZE or i+j<0 or (BOARD_SIZE-j-1)>=BOARD_SIZE or (BOARD_SIZE-j-1)<0) return-5;
+            if (board[i+j][BOARD_SIZE-j-1]=='x') ++player_x;
+            if (board[i+j][BOARD_SIZE-j-1]=='o') ++player_o;
+            if (player_x==WINNING_LENGHT) return 1;
+            if (player_o==WINNING_LENGHT) return -1;
+            if (board[i+j][BOARD_SIZE-j-1]==' ') {player_o=0; player_x=0;}
+        }
+        player_o=0; player_x=0;
+    }
+    for (int j=1; j<BOARD_SIZE-1; ++j) {
+        for (int i=0; i<BOARD_SIZE-j; ++i) { //going through a certain diagonal
+            //if((BOARD_SIZE-i-j-1)>=BOARD_SIZE or (BOARD_SIZE-i-j-1)<0 or i>=BOARD_SIZE or i<0) return-5;
+            //board[i][BOARD_SIZE-i-j-1]='C';
+            if (board[i][BOARD_SIZE-i-j-1]=='x') ++player_x;
+            if (board[i][BOARD_SIZE-i-j-1]=='o') ++player_o;
+            if (player_x==WINNING_LENGHT) return 1;
+            if (player_o==WINNING_LENGHT) return -1;
+            if (board[i][BOARD_SIZE-i-j-1]==' ') {player_o=0; player_x=0;}
+        }
+        player_o=0; player_x=0;
+    }
+    return 0;
 }
 
 void Game::fill_manually() {

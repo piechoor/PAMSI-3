@@ -3,7 +3,6 @@
 #include <iostream>
 #include <Windows.h>
 #include "settings.hh"
-#include "graph_list.hh"
 
 class Game {
 
