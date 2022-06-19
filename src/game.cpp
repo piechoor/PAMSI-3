@@ -158,13 +158,12 @@ bool Game::is_draw() {
     return true;
 }
 
-int Game::mini_max(int depth, bool is_max_player) {
+int Game::mini_max(int depth, bool is_max_player, int alpha, int beta) {
     int best_val, value;
     
     int result = evaluate();
     if (result==10 or result==-10)
         return result;
-    if (result==-5) exit(0);
     //std::cout<<"MiniMax, depth:" << depth << std::endl;;
     if (is_draw() or depth>=MAX_DEPTH) return 0; // or depth>=MAX_DEPTH
 
@@ -174,9 +173,11 @@ int Game::mini_max(int depth, bool is_max_player) {
             for (int j=0; j<BOARD_SIZE; ++j) {
                 if (board[i][j] == BLANK_SIGN) {
                     board[i][j] = COMP_SIGN; //computer moves
-                    value = mini_max(depth+1, false);
+                    value = mini_max(depth+1, false, alpha, beta);
                     board[i][j] = BLANK_SIGN; //undo
                 if (value > best_val) best_val = value;
+                if (best_val > alpha) alpha = best_val;
+                if (beta <= alpha) break;
                 }
             }
         }
@@ -189,9 +190,11 @@ int Game::mini_max(int depth, bool is_max_player) {
             for (int j=0; j<BOARD_SIZE; ++j) {
                 if (board[i][j] == BLANK_SIGN) {
                     board[i][j] = PLAYER_SIGN; //player moves
-                value = mini_max(depth+1, true);
+                value = mini_max(depth+1, true, alpha, beta);
                 board[i][j] = BLANK_SIGN; //undo
                 if (value < best_val) best_val = value;
+                if (best_val < beta) beta = best_val;
+                if (beta <= alpha) break;
                 }
             }
         }
@@ -208,7 +211,7 @@ void Game::computer_move() {
         for (int j=0; j<BOARD_SIZE; ++j) {
             if (board[i][j] == BLANK_SIGN) {
                 board[i][j] = COMP_SIGN; //computer moves
-                value = mini_max(0, false);
+                value = mini_max(0, false, -INFINITE_, +INFINITE_);
                 board[i][j] = BLANK_SIGN; //undo
                 if (value > best_val) {
                     best_val = value;
@@ -234,6 +237,7 @@ void Game::player_move() {
             this->display_board();
             std::cin >> x >> y;
         }
+        this->display_board();
 
 }
 

@@ -10,7 +10,7 @@ class Game {
 
     int evaluate();
     bool play(int x_board, int y_board, char sign);
-    int mini_max(int depth, bool is_max_player);
+    int mini_max(int depth, bool is_max_player, int alpha, int beta);
     bool is_draw();
     void display_board();
     
