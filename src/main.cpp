@@ -3,7 +3,11 @@
 int main() {
     
     Game g;
-    g.fill_manually();
-
+    while(true) {
+        g.player_move();
+        if(g.is_game_finished()) break;
+        g.computer_move();
+        if(g.is_game_finished()) break;
+    }
     return 0;
 }

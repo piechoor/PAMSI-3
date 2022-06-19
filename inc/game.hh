@@ -7,16 +7,19 @@
 class Game {
 
     char board[BOARD_SIZE][BOARD_SIZE];
-    int no_moves;
 
-    void show_stats();
+    int evaluate();
+    bool play(int x_board, int y_board, char sign);
+    int mini_max(int depth, bool is_max_player);
+    bool is_draw();
+    void display_board();
     
     public:
 
         Game();
-        void display_board();
-        bool play(int x_board, int y_board, char sign);
         void fill_manually();
-        int evaluate();
+        void computer_move();
+        void player_move();
+        bool is_game_finished();
 
 };
