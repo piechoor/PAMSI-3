@@ -4,11 +4,12 @@ int main() {
     
     Game g;
 
-    if (COMP_FIRST) g.computer_move();
+    if (DEBUGGING) g.fill_manually();
+    if (COMP_FIRST) g.computers_move();
     while(true) {
-        g.player_move();
+        g.players_move();
         if(g.is_game_finished()) break;
-        g.computer_move();
+        g.computers_move();
         if(g.is_game_finished()) break;
     }
     
