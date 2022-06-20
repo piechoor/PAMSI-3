@@ -162,6 +162,7 @@ int Game::mini_max(int depth, bool is_max_player, int alpha, int beta) {
                 if (best_val > alpha) alpha = best_val;
                 if (beta <= alpha) break;
                 }
+                if (beta <= alpha) break;
             }
         }
         return best_val;
@@ -179,6 +180,7 @@ int Game::mini_max(int depth, bool is_max_player, int alpha, int beta) {
                 if (best_val < beta) beta = best_val;
                 if (beta <= alpha) break; //prunes
                 }
+                if (beta <= alpha) break;
             }
         }
         return best_val;
